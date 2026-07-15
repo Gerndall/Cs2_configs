@@ -1,0 +1,87 @@
+// Controls:
+//   SPACE             Pause or resume demo
+//   U                 Open or close demo UI
+//   NUMPAD PLUS       Increase playback speed
+//   NUMPAD MINUS      Decrease playback speed
+//   ARROW UP          Skip 10 seconds forward
+//   ARROW DOWN        Skip 10 seconds backward
+//   SHIFT + ARROW UP  Skip 30 seconds forward
+//   SHIFT + ARROW DOWN Skip 30 seconds backward
+// ============================================================================
+
+
+// ----------------------------------------------------------------------------
+// General demo settings
+// ----------------------------------------------------------------------------
+
+tv_record_immediate 1
+
+bind "space" "demo_togglepause"
+bind "u"     "demoui"
+
+
+// ----------------------------------------------------------------------------
+// Playback speed
+// ----------------------------------------------------------------------------
+// Available speeds:
+//   0.25x
+//   0.50x
+//   1.00x
+//   2.00x
+//   4.00x
+// ----------------------------------------------------------------------------
+
+alias "demo_speed_025" "demo_timescale 0.25; alias demo_slower demo_speed_025; alias demo_faster demo_speed_050; echo [DEMO] Playback speed: 0.25x"
+alias "demo_speed_050" "demo_timescale 0.50; alias demo_slower demo_speed_025; alias demo_faster demo_speed_100; echo [DEMO] Playback speed: 0.50x"
+alias "demo_speed_100" "demo_timescale 1.00; alias demo_slower demo_speed_050; alias demo_faster demo_speed_200; echo [DEMO] Playback speed: 1.00x"
+alias "demo_speed_200" "demo_timescale 2.00; alias demo_slower demo_speed_100; alias demo_faster demo_speed_400; echo [DEMO] Playback speed: 2.00x"
+alias "demo_speed_400" "demo_timescale 4.00; alias demo_slower demo_speed_200; alias demo_faster demo_speed_400; echo [DEMO] Playback speed: 4.00x"
+
+bind "kp_minus" "demo_slower"
+bind "kp_plus"  "demo_faster"
+
+// Initialize playback speed and speed aliases
+demo_speed_100
+
+
+// ----------------------------------------------------------------------------
+// Demo navigation
+// ----------------------------------------------------------------------------
+// CS2 demos use 64 ticks per second.
+//
+// 10 seconds = 640 ticks
+// 30 seconds = 1920 ticks
+// ----------------------------------------------------------------------------
+
+alias "demo_skip_10" "demo_gototick 640 relative; echo [DEMO] Skipped forward 10 seconds"
+alias "demo_skip_30" "demo_gototick 1920 relative; echo [DEMO] Skipped forward 30 seconds"
+
+alias "demo_back_10" "demo_gototick -640 relative; echo [DEMO] Skipped backward 10 seconds"
+alias "demo_back_30" "demo_gototick -1920 relative; echo [DEMO] Skipped backward 30 seconds"
+
+
+// ----------------------------------------------------------------------------
+// Shift modifier
+// ----------------------------------------------------------------------------
+// Holding SHIFT temporarily changes the arrow-key skip duration
+// from 10 seconds to 30 seconds.
+// ----------------------------------------------------------------------------
+
+alias "+demo_shift" "bind uparrow demo_skip_30; bind downarrow demo_back_30"
+alias "-demo_shift" "bind uparrow demo_skip_10; bind downarrow demo_back_10"
+
+bind "uparrow"   "demo_skip_10"
+bind "downarrow" "demo_back_10"
+bind "shift"     "+demo_shift"
+
+
+// ----------------------------------------------------------------------------
+// Confirmation
+// ----------------------------------------------------------------------------
+
+echo "============================================================"
+echo "[DEMO] CS2 demo config loaded"
+echo "[DEMO] Playback speed: 1.00x"
+echo "[DEMO] Arrow keys: 10-second skip"
+echo "[DEMO] Shift + arrow keys: 30-second skip"
+echo "============================================================"
