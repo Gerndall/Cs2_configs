@@ -17,7 +17,3 @@ I created this repository to keep my configs backed up, organized, and easy to i
 4. Execute the config:
 
    `exec <config_name>`
-
-Example:
-
-`exec demo`
